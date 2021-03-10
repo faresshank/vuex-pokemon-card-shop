@@ -1,5 +1,5 @@
 <template>
-    <div id="header">
+    <div id="header" class="upper">
         <p class="title">Pokemon Card Shop</p>
         <div class="cart_info">
             <div class="cart_info_pokeball">
@@ -8,7 +8,7 @@
                 <span class="count">0</span>
                 <span class="count_empty">PANIER</span>
             </div>
-            <p class="cart_info_amount">0 €</p>
+            <p class="cart_info_amount price">0 €</p>
             <div class="cart_info_submenu hide-righ">
                 <p class="product_line">
                     <span class="product_line_name">Pikachu EX</span>
@@ -19,6 +19,27 @@
                     </span>
                     <span class="product_line_remove">X</span>
                 </p>
+                <p class="product_line">
+                    <span class="product_line_name">Pikachu EX</span>
+                    <span class="product_line_widget">
+                        <span class="widget_minus">-</span>
+                        <span class="product_line_count">x3</span>
+                        <span class="widget_catch">+</span>
+                    </span>
+                    <span class="product_line_remove">X</span>
+                </p>
+                <p class="product_line">
+                    <span class="product_line_name">Pikachu EX</span>
+                    <span class="product_line_widget">
+                        <span class="widget_minus">-</span>
+                        <span class="product_line_count">x3</span>
+                        <span class="widget_catch">+</span>
+                    </span>
+                    <span class="product_line_remove">X</span>
+                </p>
+                <div class="text-right">
+                    <button class="btn">Voir mon panier</button>
+                </div>
                 <p class="product_line">
                     <span class="product_line_no_product">Aucune carte dans votre panier</span>
                 </p>
@@ -40,7 +61,6 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        text-transform: uppercase;
     }
     .title {
         font-size: 2em;
@@ -99,11 +119,11 @@ export default {
     }
     .cart_info_amount {
         position: relative;
-        font-size: 1.5em;
         min-width: 100px;
         color: #9f9f9f;
     }
     .cart_info_submenu {
+        z-index: 5;
         position: absolute;
         top: 120%;
         right: 0;
@@ -114,6 +134,7 @@ export default {
         border-radius: 10px;
         text-align: left;
         transition: all 1s ease-in-out;
+        user-select: none;
     }
     .cart_info_submenu.hide-right {
         right: -300%;
