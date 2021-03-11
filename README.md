@@ -1,5 +1,6 @@
 # pokemon-card-shop
 
+![vuex-pokemon-card-shop](https://github.com/faresshank/vuex-pokemon-card-shop/blob/master/screen.png)
 
 
 ## Project setup
