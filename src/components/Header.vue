@@ -1,45 +1,28 @@
 <template>
     <div id="header" class="upper">
-        <p class="title">Pokemon Card Shop</p>
+        <router-link class="title" to="/">Pokemon Card Shop</router-link>
         <div class="cart_info">
-            <div class="cart_info_pokeball">
+            <div class="cart_info_pokeball" @click="toggleMenu()">
                 <span class="pokeball_top"></span>
                 <span class="pokeball_bottom"></span>
-                <span class="count">0</span>
-                <span class="count_empty">PANIER</span>
+                <span class="count" v-if="itemsInCart > 0">{{ itemsInCart }}</span>
+                <span class="count_empty" v-if="itemsInCart == 0">PANIER</span>
             </div>
-            <p class="cart_info_amount price">0 €</p>
-            <div class="cart_info_submenu hide-righ">
-                <p class="product_line">
-                    <span class="product_line_name">Pikachu EX</span>
+            <div v-if="itemsInCart > 0" class="cart_info_submenu" :class="[!showMenu ? 'hide-right' : '']">
+                <p v-for="(pokemon, idx) in pokemonsFromCart" :key="idx" class="product_line">
+                    <span class="product_line_name">{{ pokemon.name }}</span>
                     <span class="product_line_widget">
                         <span class="widget_minus">-</span>
-                        <span class="product_line_count">x3</span>
+                        <span class="product_line_count">x{{ pokemon.quantity }}</span>
                         <span class="widget_catch">+</span>
                     </span>
                     <span class="product_line_remove">X</span>
                 </p>
-                <p class="product_line">
-                    <span class="product_line_name">Pikachu EX</span>
-                    <span class="product_line_widget">
-                        <span class="widget_minus">-</span>
-                        <span class="product_line_count">x3</span>
-                        <span class="widget_catch">+</span>
-                    </span>
-                    <span class="product_line_remove">X</span>
-                </p>
-                <p class="product_line">
-                    <span class="product_line_name">Pikachu EX</span>
-                    <span class="product_line_widget">
-                        <span class="widget_minus">-</span>
-                        <span class="product_line_count">x3</span>
-                        <span class="widget_catch">+</span>
-                    </span>
-                    <span class="product_line_remove">X</span>
-                </p>
-                <div class="text-right">
-                    <button class="btn">Voir mon panier</button>
+                <div class="text-right submenu_actions" @click="toggleMenu()">
+                    <router-link  class="btn" to="/order" >Voir mon panier</router-link>
                 </div>
+            </div>
+            <div v-else class="cart_info_submenu" :class="[!showMenu ? 'hide-right' : '']">
                 <p class="product_line">
                     <span class="product_line_no_product">Aucune carte dans votre panier</span>
                 </p>
@@ -49,8 +32,17 @@
 </template> 
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-    
+    computed: mapGetters([
+        'showMenu',
+        'total',
+        'itemsInCart',
+        'pokemonsFromCart'
+    ]),
+    methods: mapActions([
+        'toggleMenu'
+    ])
 }
 </script>
 <style>
@@ -64,6 +56,7 @@ export default {
     }
     .title {
         font-size: 2em;
+        text-decoration: none;
     }
     .cart_info {
         position: relative;
@@ -133,14 +126,17 @@ export default {
         min-width: 330px;
         border-radius: 10px;
         text-align: left;
-        transition: all 1s ease-in-out;
+        transition: all .3s ease-in-out;
         user-select: none;
     }
     .cart_info_submenu.hide-right {
-        right: -300%;
+        right: -550%;
     }
     .cart_info_submenu:hover {
         cursor: initial;
+    }
+    .submenu_actions {
+        margin: 30px 15px 15px;
     }
     /* PRODUCT LINE */
     .product_line {
@@ -149,6 +145,9 @@ export default {
         margin: 10px;
     }
     /* PRODUCT LINE WIDGET */
+    .product_line_name {
+        width: 40%;
+    }
     .product_line_widget, .product_line_name, .product_line_remove {
         font-size: 1.4em;
     }

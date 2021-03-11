@@ -68,6 +68,8 @@ body {
     transition-timing-function: cubic-bezier(.5, 0, .5, 1);
 }
 .btn {
+    text-decoration: none;
+    font-size: 1em;
     appearance: none;
     background: linear-gradient(to bottom, #2196f3, #00bcd4);
     border: none;
