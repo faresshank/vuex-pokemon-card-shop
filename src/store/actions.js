@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { POKEMON_TCG_API_KEY, POKEMON_TCG_ENDPOINT } from '../config/config'
+
 export default {
     toggleMenu: ({commit}) => commit('toggleMenu'),
     addToCart: ({state, commit}, card) => {
@@ -13,20 +16,20 @@ export default {
           commit('incrementItemQuantity', index)
         }
     },
-    searchPokemons: ({commit}) => {
-        commit('setPokemonsFromSearch', [
-            {
-                id: 1,
-                name: 'Alakazam'
-            },
-            {
-                id: 2,
-                name: 'Pikachu'
-            },
-            {
-                id: 3,
-                name: 'Salamèche'
-            }
-        ])
+    searchPokemons: ({commit}, name) => {
+        console.log(name);
+        let query = POKEMON_TCG_ENDPOINT + `?q=name:${name}`;
+        commit('setPokemonsFromSearch', [])
+        commit('searchInProgress', true)
+        axios.get(query,  {
+            headers: { 'X-Api-Key': POKEMON_TCG_API_KEY}
+        }).then( response => {
+            console.log(response);
+            commit('searchInProgress', false)
+            commit('setPokemonsFromSearch', response.data.data)
+        }).catch( error => {
+            commit('searchInProgress', false)
+            console.error(error);
+        })
     }
 }

@@ -2,13 +2,12 @@
     <div id="card-list" class="container">
         <h1>CardList</h1>
         <div class="search">
-            <input type="text" name="search" class="input-text" placeholder="Rechercher un pokémon">
-            <button class="btn" @click="searchPokemons()">Rechercher</button>
+            <input v-model="query" type="text" name="search" class="input-text" placeholder="Rechercher un pokémon">
+            <button class="btn" @click="checkRequestValidity()">Rechercher</button>
         </div>
         <div class="content">
             <div v-for="(pokemon, idx) in pokemonsFromSearch" :key="idx" class="card" @click="addToCart(pokemon)" >
-                id: {{ pokemon.id }}<br>
-                name: {{ pokemon.name }}<br>
+                <img :src="pokemon.images.small" :alt="`${pokemon.name} - ${pokemon.rarity}`">
             </div>
         </div>
     </div>
@@ -17,13 +16,27 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
+    data () {
+        return {
+            query: ''
+        }
+    },
     computed: mapGetters([
         'pokemonsFromSearch'
     ]),
-    methods: mapActions([
-        'addToCart',
-        'searchPokemons'
-    ])
+    methods: {
+        ...mapActions([
+            'addToCart',
+            'searchPokemons'
+        ]),
+        checkRequestValidity () {
+            if (this.query != '') {
+                this.searchPokemons(this.query);
+            } else {
+                console.error('NOPE');
+            }
+        }
+    }
 }
 </script>
 <style>
@@ -43,8 +56,16 @@ export default {
     }
     .content .card {
         max-width: 220px;
-        min-height: 250px;
+        max-height: 300px;
         border: 1px solid goldenrod;
         border-radius: 10px;
+        transition: transform 0.3s;
+    }
+    .content .card:hover {
+        transform: scale(2);
+    }
+    .content .card img{
+        width: 100%;
+        height: 100%;
     }
 </style>

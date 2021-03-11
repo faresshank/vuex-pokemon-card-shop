@@ -7,5 +7,6 @@ export default {
         }, 0);
     },
     pokemonsFromSearch: state => state.pokemonsFromSearch,
-    pokemonsFromCart: state => state.items
+    pokemonsFromCart: state => state.items,
+    searchInProgress: state => state.searchInProgress,
 }

@@ -10,7 +10,8 @@ Vue.use(Vuex)
 const state = () => ({
     items: [],
     pokemonsFromSearch: [],
-    isMenuOpen: false
+    isMenuOpen: false,
+    searchInProgress: false
   })
 
 export default new Vuex.Store({

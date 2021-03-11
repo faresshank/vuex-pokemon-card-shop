@@ -5,31 +5,24 @@
 			<table v-if="itemsInCart > 0">
 				<thead>
 					<tr>
-						<th class="text-left w-15">Produit</th>
+						<th class="text-left w-25">Produit</th>
 						<th></th>
 						<th class="text-center">QUANTITÉ</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td class="text-left">image</td>
-						<td class="text-left">Une description de la carte sélectionnée</td>
-						<td>
-							<div class="order_widget product_line_widget">
-								<span class="widget_minus">-</span>
-								1
-								<span class="widget_catch">+</span>
-								<span class="order_widget product_line_remove">X</span>
-							</div>
+					<tr v-for="(pokemon, idx) in pokemonsFromCart" :key="idx" >
+						<td class="text-left">
+							<img class="card_illustration" :src="pokemon.images.small" :alt="`${pokemon.name} - ${pokemon.rarity}`">
 						</td>
-					</tr>
-					<tr>
-						<td class="text-left">image</td>
-						<td class="text-left">Une description de la carte sélectionnée</td>
+						<td class="text-left">
+							<p class="price">{{ pokemon.name }}</p>
+							<p>{{ pokemon.rarity }}</p>
+						</td>
 						<td>
 							<div class="order_widget product_line_widget">
 								<span class="widget_minus">-</span>
-								1
+								{{ pokemon.quantity }}
 								<span class="widget_catch">+</span>
 								<span class="order_widget product_line_remove">X</span>
 							</div>
@@ -38,15 +31,15 @@
 					<tr>
 						<td></td>
 						<td class="upper">Quantité totale</td>
-						<td class="price">{{ itemsInCart }} cartes au total</td>
+						<td class="price">{{ itemsInCart }} cartes</td>
 					</tr>
 				</tbody>
 			</table>
 			<div v-else>
-				<h2 class="illustration">Aucun produit dans votre panier</h2>
+				<h2 class="empty_illustration">Aucun produit dans votre panier</h2>
 				<br><router-link class="btn" to="/">Retourner à l'accueil</router-link>
 				<br>
-				<img class="illustration" src="../assets/empty_cart.png" alt="Panier vide">
+				<img class="empty_illustration" src="../assets/empty_cart.png" alt="Panier vide">
 			</div>
 		</section>
 	</div>
@@ -56,19 +49,30 @@
 import { mapGetters } from 'vuex'
 export default {
     computed: mapGetters([
-        'itemsInCart'
+        'itemsInCart',
+		'pokemonsFromCart'
     ]),
 }
 </script>
 
 <style>
-	.illustration {
+	.card_illustration {
+		width: 100%;
+		padding: 10px;
+		z-index: 1;
+		transition: transform .2s;
+	}
+	.card_illustration:hover {
+		transform: scale(2);
+		z-index: 2;
+	}
+	.empty_illustration {
 		margin-top: 5%;
 		color: #6a7ad7 !important;
 	}
 	/* WIDGET */
 	.order_widget .widget_minus {
-		left: 10%;
+		left: 20%;
 	}
 	.order_widget .widget_catch {
 		left: 70%;

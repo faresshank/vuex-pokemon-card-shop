@@ -1,5 +1,8 @@
 <template>
     <div id="header" class="upper">
+        <div class="message" :class="[searchInProgress ? 'show' : '']">
+            <div class="price">Recherche en cours</div>
+        </div>
         <router-link class="title" to="/">Pokemon Card Shop</router-link>
         <div class="cart_info">
             <div class="cart_info_pokeball" @click="toggleMenu()">
@@ -38,7 +41,8 @@ export default {
         'showMenu',
         'total',
         'itemsInCart',
-        'pokemonsFromCart'
+        'pokemonsFromCart',
+        'searchInProgress'
     ]),
     methods: mapActions([
         'toggleMenu'
@@ -47,6 +51,11 @@ export default {
 </script>
 <style>
     #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 5;
         border-bottom: 4px solid #d93832;
         background-color: #FFF;
         padding: 25px;
