@@ -5,7 +5,7 @@ export default {
     toggleMenu: ({commit}) => commit('toggleMenu'),
     addToCart: ({state, commit}, card) => {
         let index = -1;
-        state.items.find((item, idx) => {
+        state.pokemonsInCart.find((item, idx) => {
             if (item.id === card.id) {
                 index = idx;
             }
@@ -14,6 +14,12 @@ export default {
           commit('pushToCart', card)
         } else {
           commit('incrementItemQuantity', index)
+        }
+        if (!state.showAddInCartNotif) {
+            commit('showAddInCartNotif')
+            setTimeout(() => {
+                commit('showAddInCartNotif')
+            }, 1200)
         }
     },
     searchPokemons: ({commit}, name) => {
@@ -25,11 +31,19 @@ export default {
             headers: { 'X-Api-Key': POKEMON_TCG_API_KEY}
         }).then( response => {
             console.log(response);
-            commit('searchInProgress', false)
-            commit('setPokemonsFromSearch', response.data.data)
+            commit('searchInProgress', false);
+            if (response.data.data.length > 0) {
+                commit('showNoResult', false);
+                commit('setPokemonsFromSearch', response.data.data);
+            } else {
+                commit('showNoResult', true);
+            }
         }).catch( error => {
-            commit('searchInProgress', false)
+            commit('searchInProgress', false);
             console.error(error);
         })
-    }
+    },
+    decrementCard: ({commit}, index) => commit('decrementCard', index),
+    incrementCard: ({commit}, index) => commit('incrementCard', index),
+    removeFromCard: ({commit}, index) => commit('removeFromCard', index),
 }

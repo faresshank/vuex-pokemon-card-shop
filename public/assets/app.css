@@ -43,7 +43,7 @@ body {
 .upper {
     text-transform: uppercase;
 }
-.price {
+.text-15 {
     font-size: 1.5em;
 }
     /* SEARCH INPUT */
@@ -67,7 +67,7 @@ body {
 .btn:hover {
     box-shadow: 0 0 2em rgba(white, .3);
 }
-.btn:active, .content .card:active {
+.btn:active{
     transform: scale(0.8) translateY(10%);
     transition-timing-function: cubic-bezier(.5, 0, .5, 1);
 }
@@ -97,7 +97,11 @@ body {
     border: 2px solid;
     border-radius: 20px;
     transition: all .5s ease-in-out;
+    background-color: #fff;
 }
 .message.show {
     top: 20%;
+}
+.message.success {
+    background-color: lightgreen;
 }

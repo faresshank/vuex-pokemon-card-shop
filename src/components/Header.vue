@@ -1,7 +1,10 @@
 <template>
     <div id="header" class="upper">
         <div class="message" :class="[searchInProgress ? 'show' : '']">
-            <div class="price">Recherche en cours</div>
+            <div class="text-15">Recherche en cours</div>
+        </div>
+        <div class="message success" :class="[showAddInCartNotif ? 'show' : '']">
+            <div class="text-15">Carte ajoutée au panier</div>
         </div>
         <router-link class="title" to="/">Pokemon Card Shop</router-link>
         <div class="cart_info">
@@ -12,14 +15,14 @@
                 <span class="count_empty" v-if="itemsInCart == 0">PANIER</span>
             </div>
             <div v-if="itemsInCart > 0" class="cart_info_submenu" :class="[!showMenu ? 'hide-right' : '']">
-                <p v-for="(pokemon, idx) in pokemonsFromCart" :key="idx" class="product_line">
+                <p v-for="(pokemon, idx) in pokemonsInCart" :key="idx" class="product_line">
                     <span class="product_line_name">{{ pokemon.name }}</span>
                     <span class="product_line_widget">
-                        <span class="widget_minus">-</span>
+                        <span class="widget_minus" @click="decrementCard(idx)">-</span>
                         <span class="product_line_count">x{{ pokemon.quantity }}</span>
-                        <span class="widget_catch">+</span>
+                        <span class="widget_catch" @click="incrementCard(idx)">+</span>
                     </span>
-                    <span class="product_line_remove">X</span>
+                    <span class="product_line_remove" @click="removeFromCard(idx)">X</span>
                 </p>
                 <div class="text-right submenu_actions" @click="toggleMenu()">
                     <router-link  class="btn" to="/order" >Voir mon panier</router-link>
@@ -35,17 +38,22 @@
 </template> 
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
-    computed: mapGetters([
-        'showMenu',
-        'total',
-        'itemsInCart',
-        'pokemonsFromCart',
-        'searchInProgress'
-    ]),
+    computed: {
+        ...mapGetters(['itemsInCart']),
+        ...mapState([
+            'showMenu',
+            'showAddInCartNotif',
+            'searchInProgress',
+            'pokemonsInCart'
+        ]),
+    },
     methods: mapActions([
-        'toggleMenu'
+        'toggleMenu',
+        'decrementCard',
+        'incrementCard',
+        'removeFromCard',
     ])
 }
 </script>

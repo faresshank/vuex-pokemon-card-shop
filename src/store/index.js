@@ -8,9 +8,11 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = () => ({
-    items: [],
+    pokemonsInCart: [],
     pokemonsFromSearch: [],
-    isMenuOpen: false,
+    showNoResult: false,
+    showMenu: false,
+    showAddInCartNotif: false,
     searchInProgress: false
   })
 

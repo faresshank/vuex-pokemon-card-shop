@@ -11,27 +11,27 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(pokemon, idx) in pokemonsFromCart" :key="idx" >
+					<tr v-for="(pokemon, idx) in pokemonsInCart" :key="idx" >
 						<td class="text-left">
 							<img class="card_illustration" :src="pokemon.images.small" :alt="`${pokemon.name} - ${pokemon.rarity}`">
 						</td>
 						<td class="text-left">
-							<p class="price">{{ pokemon.name }}</p>
+							<p class="text-15">{{ pokemon.name }}</p>
 							<p>{{ pokemon.rarity }}</p>
 						</td>
 						<td>
 							<div class="order_widget product_line_widget">
-								<span class="widget_minus">-</span>
+								<span class="widget_minus" @click="decrementCard(idx)">-</span>
 								{{ pokemon.quantity }}
-								<span class="widget_catch">+</span>
-								<span class="order_widget product_line_remove">X</span>
+								<span class="widget_catch" @click="incrementCard(idx)">+</span>
+								<span class="order_widget product_line_remove" @click="removeFromCard(idx)">X</span>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td class="upper">Quantité totale</td>
-						<td class="price">{{ itemsInCart }} cartes</td>
+						<td class="text-15">{{ itemsInCart }} cartes</td>
 					</tr>
 				</tbody>
 			</table>
@@ -46,12 +46,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
-    computed: mapGetters([
-        'itemsInCart',
-		'pokemonsFromCart'
-    ]),
+    computed: {
+		...mapState(['pokemonsInCart']),
+		...mapGetters(['itemsInCart'])
+	},
+	methods: mapActions([
+		'decrementCard',
+		'incrementCard',
+		'removeFromCard'
+	])
 }
 </script>
 
@@ -63,7 +68,7 @@ export default {
 		transition: transform .2s;
 	}
 	.card_illustration:hover {
-		transform: scale(2);
+		transform: scale(1.5);
 		z-index: 2;
 	}
 	.empty_illustration {
