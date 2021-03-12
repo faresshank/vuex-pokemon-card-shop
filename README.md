@@ -1,9 +1,6 @@
-# pokemon-card-shop
+ ![vuex-pokemon-card-shop](https://github.com/faresshank/vuex-pokemon-card-shop/blob/master/screen.png)
 
-![vuex-pokemon-card-shop](https://github.com/faresshank/vuex-pokemon-card-shop/blob/master/screen.png)
-
-
-## Project setup
+# Project setup
 1. Duplicate the `config-example.js` content and create a `config.js` in config Folder.
 2. Change the `POKEMON_TCG_API_KEY` with your own key. (https://pokemontcg.io/)
 3.
