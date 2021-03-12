@@ -5,7 +5,7 @@
 			<table v-if="itemsInCart > 0">
 				<thead>
 					<tr>
-						<th class="text-left w-40">CARTE</th>
+						<th class="text-left w-40">{{ itemsInCart > 1 ? 'CARTES' : 'CARTE' }}</th>
 						<th class="text-center w-15">PRIX UNITAIRE</th>
 						<th class="text-center w-15">PRIX TOTAL</th>
 						<th class="text-center w-15">QUANTITÉ</th>
@@ -40,7 +40,7 @@
 						<td></td>
 						<td class="upper">Total</td>
 						<td class="text-15">{{ totalPrice }} €</td>
-						<td class="text-15">{{ itemsInCart }} cartes</td>
+						<td class="text-15">{{ itemsInCart }} {{ itemsInCart > 1 ? 'cartes' : 'carte' }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -78,7 +78,7 @@ export default {
 		align-items: center;
 	}
 	.card_illustration {
-		width: 100%;
+		width: 50%;
 		padding: 10px;
 		z-index: 1;
 		transition: transform .2s;

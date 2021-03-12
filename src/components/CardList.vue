@@ -1,6 +1,6 @@
 <template>
     <div id="card-list" class="container">
-        <h1>CardList</h1>
+        <h1>Recherche de cartes</h1>
         <div class="search">
             <input v-model="query" type="text" name="search" class="input-text" placeholder="Rechercher un pokémon">
             <button class="btn" @click="checkRequestValidity()">Rechercher</button>

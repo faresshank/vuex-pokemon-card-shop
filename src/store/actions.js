@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { POKEMON_TCG_API_KEY, POKEMON_TCG_ENDPOINT } from '../config/config'
+import { POKEMON_TCG_API_KEY, POKEMON_TCG_ENDPOINT } from '../config/config';
+import { PRICE_NOT_DEFINED } from './globals';
+
+const toggleCommit = (commit, commitName, timeout) => {
+    commit(commitName);
+    setTimeout(() => {
+        commit(commitName);
+    }, timeout)
+}
 
 export default {
     toggleMenu: ({commit}) => commit('toggleMenu'),
@@ -11,15 +19,17 @@ export default {
             }
         })
         if (index == -1) {
-          commit('pushToCart', card);
+            if (card.price.type == PRICE_NOT_DEFINED) {
+                toggleCommit(commit, 'showAddInCartError', 2500);
+            }
+            else {
+                commit('pushToCart', card);
+            }
         } else {
-          commit('incrementCard', index);
+            commit('incrementCard', index);
         }
-        if (!state.showAddInCartNotif) {
-            commit('showAddInCartNotif');
-            setTimeout(() => {
-                commit('showAddInCartNotif');
-            }, 1200)
+        if (!state.showAddInCartNotif && card.price.type != PRICE_NOT_DEFINED) {
+            toggleCommit(commit, 'showAddInCartNotif', 1200);
         }
     },
     searchPokemons: ({commit}, name) => {

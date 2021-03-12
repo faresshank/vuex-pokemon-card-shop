@@ -1,0 +1,1 @@
+export const PRICE_NOT_DEFINED = 'ND';

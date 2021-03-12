@@ -13,6 +13,7 @@ const state = () => ({
     showNoResult: false,
     showMenu: false,
     showAddInCartNotif: false,
+    showAddInCartError: false,
     searchInProgress: false
   })
 

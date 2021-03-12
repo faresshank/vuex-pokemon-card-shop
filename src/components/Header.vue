@@ -6,6 +6,12 @@
         <div class="message success" :class="[showAddInCartNotif ? 'show' : '']">
             <div class="text-15">Carte ajoutée au panier</div>
         </div>
+        <div class="message error" :class="[showAddInCartError ? 'show' : '']">
+            <div class="text-15">
+                Le prix de cette carte n'est pas définie<br>
+                <em>impossible de l'ajouter au panier</em>
+            </div>
+        </div>
         <router-link class="title" to="/">Pokemon Card Shop</router-link>
         <div class="cart_info">
             <div class="cart_info_pokeball" @click="toggleMenu()">
@@ -49,6 +55,7 @@ export default {
         ...mapState([
             'showMenu',
             'showAddInCartNotif',
+            'showAddInCartError',
             'searchInProgress',
             'pokemonsInCart'
         ]),

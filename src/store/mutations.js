@@ -16,10 +16,10 @@ export default {
     },
     setPokemonsFromSearch: (state, pokemons) => {
         pokemons.forEach(pokemon => {
-            console.log(pokemon);
             if (pokemon.tcgplayer && pokemon.tcgplayer.prices) {
+                // Get the first price based on 'mid'
                 let priceType = Object.keys(pokemon.tcgplayer.prices);
-                let amount = pokemon.tcgplayer.prices[priceType[0]].market.toFixed(2);
+                let amount = pokemon.tcgplayer.prices[priceType[0]].mid.toFixed(2);
                 pokemon.price = {
                     amount,
                     type: priceType[0],
@@ -37,6 +37,7 @@ export default {
     },
     searchInProgress: (state, searchInProgress) => state.searchInProgress = searchInProgress,
     showAddInCartNotif: state => state.showAddInCartNotif = !state.showAddInCartNotif,
+    showAddInCartError: state => state.showAddInCartError = !state.showAddInCartError,
     decrementCard: (state, index) => {
         if (state.pokemonsInCart[index].quantity > 1) {
             state.pokemonsInCart[index].quantity--;
