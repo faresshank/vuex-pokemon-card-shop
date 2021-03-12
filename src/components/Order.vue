@@ -5,19 +5,27 @@
 			<table v-if="itemsInCart > 0">
 				<thead>
 					<tr>
-						<th class="text-left w-25">Produit</th>
-						<th></th>
-						<th class="text-center">QUANTITÉ</th>
+						<th class="text-left w-40">CARTE</th>
+						<th class="text-center w-15">PRIX UNITAIRE</th>
+						<th class="text-center w-15">PRIX TOTAL</th>
+						<th class="text-center w-15">QUANTITÉ</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="(pokemon, idx) in pokemonsInCart" :key="idx" >
-						<td class="text-left">
+						<td class="text-left card_row">
 							<img class="card_illustration" :src="pokemon.images.small" :alt="`${pokemon.name} - ${pokemon.rarity}`">
+							<div>
+								<p class="text-15">{{ pokemon.name }}</p>
+								<p>{{ pokemon.rarity }}</p>
+							</div>
 						</td>
-						<td class="text-left">
-							<p class="text-15">{{ pokemon.name }}</p>
-							<p>{{ pokemon.rarity }}</p>
+						<td class="text-center">
+							<p class="text-15">{{pokemon.price.amount}} €</p>
+							<small>{{pokemon.price.type}}</small>
+						</td>
+						<td class="text-center">
+							<p class="text-15">{{pokemon.price.total}} €</p>
 						</td>
 						<td>
 							<div class="order_widget product_line_widget">
@@ -30,7 +38,8 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td class="upper">Quantité totale</td>
+						<td class="upper">Total</td>
+						<td class="text-15">{{ totalPrice }} €</td>
 						<td class="text-15">{{ itemsInCart }} cartes</td>
 					</tr>
 				</tbody>
@@ -50,7 +59,10 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
     computed: {
 		...mapState(['pokemonsInCart']),
-		...mapGetters(['itemsInCart'])
+		...mapGetters([
+			'itemsInCart',
+			'totalPrice'
+		])
 	},
 	methods: mapActions([
 		'decrementCard',
@@ -61,6 +73,10 @@ export default {
 </script>
 
 <style>
+	.card_row {
+		display: flex;
+		align-items: center;
+	}
 	.card_illustration {
 		width: 100%;
 		padding: 10px;

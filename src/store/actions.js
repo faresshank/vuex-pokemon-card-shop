@@ -11,26 +11,24 @@ export default {
             }
         })
         if (index == -1) {
-          commit('pushToCart', card)
+          commit('pushToCart', card);
         } else {
-          commit('incrementItemQuantity', index)
+          commit('incrementCard', index);
         }
         if (!state.showAddInCartNotif) {
-            commit('showAddInCartNotif')
+            commit('showAddInCartNotif');
             setTimeout(() => {
-                commit('showAddInCartNotif')
+                commit('showAddInCartNotif');
             }, 1200)
         }
     },
     searchPokemons: ({commit}, name) => {
-        console.log(name);
         let query = POKEMON_TCG_ENDPOINT + `?q=name:${name}`;
-        commit('setPokemonsFromSearch', [])
-        commit('searchInProgress', true)
+        commit('setPokemonsFromSearch', []);
+        commit('searchInProgress', true);
         axios.get(query,  {
             headers: { 'X-Api-Key': POKEMON_TCG_API_KEY}
         }).then( response => {
-            console.log(response);
             commit('searchInProgress', false);
             if (response.data.data.length > 0) {
                 commit('showNoResult', false);

@@ -13,6 +13,10 @@
         <div class="content">
             <div v-for="(pokemon, idx) in pokemonsFromSearch" :key="idx" class="card" @click="addToCart(pokemon)" >
                 <img :src="pokemon.images.small" :alt="`${pokemon.name} - ${pokemon.rarity}`">
+                <small class="price text-10" >
+                    {{ pokemon.price.amount }} €
+                    <em class="holofoil">{{ pokemon.price.type }}</em>
+                </small>
             </div>
         </div>
     </div>
@@ -65,19 +69,32 @@ export default {
     .content .card {
         max-width: 220px;
         max-height: 300px;
-        border: 1px solid goldenrod;
-        border-radius: 5px;
         transition: transform 0.3s;
     }
     .content .card:hover {
+        z-index: 10;
         transform: scale(1.5) translateY(0);
     }
     .content .card:active {
         transform: scale(1.2) translateY(10%);
     }
     .content .card img{
+        border-radius: 5px;
+        display: block;
         width: 100%;
-        height: 100%;
+        height: 93%;
+    }
+    .content .card .price {
+        display: block;
+        background: linear-gradient(to bottom, #2196f3, #00bcd4);
+        border-radius: 20px;
+        color: #FFF;
+        font-weight: 500;
+    }
+    .content .card .price .holofoil {
+        color: antiquewhite;
+        font-weight: 500;
+        font-size: 0.8em;
     }
     .add-in-cart {
         margin-top: 20px;

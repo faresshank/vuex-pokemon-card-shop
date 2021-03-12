@@ -14,13 +14,14 @@
                 <span class="count" v-if="itemsInCart > 0">{{ itemsInCart }}</span>
                 <span class="count_empty" v-if="itemsInCart == 0">PANIER</span>
             </div>
+            <p class="cart_info_amount text-15">{{ totalPrice }} €</p>
             <div v-if="itemsInCart > 0" class="cart_info_submenu" :class="[!showMenu ? 'hide-right' : '']">
                 <p v-for="(pokemon, idx) in pokemonsInCart" :key="idx" class="product_line">
                     <span class="product_line_name">{{ pokemon.name }}</span>
                     <span class="product_line_widget">
                         <span class="widget_minus" @click="decrementCard(idx)">-</span>
                         <span class="product_line_count">x{{ pokemon.quantity }}</span>
-                        <span class="widget_catch" @click="incrementCard(idx)">+</span>
+                        <span class="widget_catch" @click="addToCart(pokemon)">+</span>
                     </span>
                     <span class="product_line_remove" @click="removeFromCard(idx)">X</span>
                 </p>
@@ -41,7 +42,10 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
     computed: {
-        ...mapGetters(['itemsInCart']),
+        ...mapGetters([
+            'itemsInCart',
+            'totalPrice'
+        ]),
         ...mapState([
             'showMenu',
             'showAddInCartNotif',
@@ -52,7 +56,7 @@ export default {
     methods: mapActions([
         'toggleMenu',
         'decrementCard',
-        'incrementCard',
+        'addToCart',
         'removeFromCard',
     ])
 }
